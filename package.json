@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2"
+  },
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:front-auth dev:front-admin dev:front-auth-customer dev:front-customer dev:auth proxy",
+    "dev:auth": "cd client/auth && npm run dev",
+    "dev:front-auth": "cd client/admin/auth-admin && npm run dev",
+    "dev:front-admin": "cd client/admin/front-admin && npm run dev",
+    "dev:front-auth-customer": "cd client/customer/auth-customer && npm run dev",
+    "dev:front-customer": "cd client/customer/front-customer && npm run dev",
+    "proxy": "node ./proxy.js"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

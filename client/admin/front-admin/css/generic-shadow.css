@@ -1,0 +1,129 @@
+/* GENERIC */
+
+button.custom-btn.material-icons,
+button.custom-btn.material-icons-outlined,
+button.custom-btn.material-icons-two-tone {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: none;
+}
+
+.material-icons,
+.material-icons-outlined,
+.material-icons-two-tone {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+
+
+/* COLORS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.material-icons,
+.material-icons-outlined,
+.material-icons-two-tone {
+    color: var(--color-dark);
+}
+
+svg * {
+    fill: var(--color-dark);
+}
+
+button:disabled {
+    color: var(--color-muted) !important;
+    background: var(--color-interface) !important;
+    border-color: var(--color-interface) !important;
+    cursor: not-allowed !important;
+}
+button.success:not(:disabled) {
+    color: var(--color-success);
+    background: var(--color-success-bg) !important;
+    border-color: var(--color-success) !important;
+}
+
+button.danger:not(:disabled) {
+    color: var(--color-danger);
+    background: var(--color-danger-bg) !important;
+    border-color: var(--color-danger) !important;
+}
+
+button.warning:not(:disabled) {
+    color: var(--color-warning);
+    background: var(--color-warning-bg) !important;
+    border-color: var(--color-warning) !important;
+}
+
+button.info:not(:disabled) {
+    color: var(--color-info);
+    background: var(--color-info-bg) !important;
+    border-color: var(--color-info) !important;
+}
+
+button.primary:not(:disabled) {
+    color: var(--color-primary);
+    background: var(--color-primary-bg);
+    border-color: var(--color-primary) !important;
+}
+
+/* FONTS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+    font-weight: var(--font-weight-bold);
+}
+
+h1 {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+}
+
+p {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+}
+
+
+/* SCROLLBAR */
+@-moz-document url-prefix() {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-scrollbar) transparent;
+    }
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar);
+    border-radius: 1px;
+    border: 3px solid transparent;
+}
+
+/* END SCROLLBAR */
