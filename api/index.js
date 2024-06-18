@@ -26,6 +26,7 @@ app.use((req, res, next) => {
 
 const corsOptions = {
   origin: [process.env.API_URL],
+  credentials: true
 }
 
 app.use(session({
