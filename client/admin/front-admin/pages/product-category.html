@@ -1,0 +1,10 @@
+<header>
+    <title-component title="Users"></title-component>
+    <menu-component></menu-component>
+</header>
+<main>
+    <crud-component>
+        <data-list-component slot="data-list" endpoint="/api/admin/users"></data-list-component>
+        <user-form-component slot="user-form" endpoint="/api/admin/users"></user-form-component>
+    </crud-component>
+</main>
