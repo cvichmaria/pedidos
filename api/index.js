@@ -1,6 +1,7 @@
 require('dotenv').config()
 const process = require('process')
 const express = require('express')
+const session = require('express-session')
 const IORedis = require('ioredis')
 const RedisStore = require('connect-redis').default
 const cors = require('cors')
@@ -8,7 +9,6 @@ const fs = require('fs')
 const app = express()
 const userAgentMiddleware = require('./src/middlewares/user-agent')
 const exposeServiceMiddleware = require('./src/middlewares/expose-services')
-const session = require('express-session');
 
 const redisClient = new IORedis(process.env.REDIS_URL)
 const subscriberClient = new IORedis(process.env.REDIS_URL)
@@ -23,10 +23,6 @@ app.use((req, res, next) => {
   req.redisClient = redisClient
   next()
 })
-
-const corsOptions = {
-  origin: [process.env.API_URL],
-}
 
 app.use(session({
   store: new RedisStore({ client: redisClient }),
@@ -43,9 +39,14 @@ app.use(session({
   }
 }))
 
+const corsOptions = {
+  origin: [process.env.API_URL],
+  credentials: true
+}
+
 app.use(cors(corsOptions))
-app.use(userAgentMiddleware)
 app.use(...Object.values(exposeServiceMiddleware))
+// app.use(authCookieMiddleware)
 app.use(express.json({ limit: '10mb', extended: true }))
 app.use(express.urlencoded({ limit: '10mb', extended: true, parameterLimit: 50000 }))
 

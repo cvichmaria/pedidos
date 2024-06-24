@@ -1,5 +1,5 @@
-import { showImage } from '../redux/images-slice.js'
 import { store } from '../redux/store.js'
+import { showImage, removeImage } from '../redux/images-slice.js'
 class ImageModal extends HTMLElement {
   constructor () {
     super()
@@ -14,9 +14,6 @@ class ImageModal extends HTMLElement {
     })
   }
 
- 
-
- 
   async loadData () {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/images`)
     const data = await response.json()
@@ -26,10 +23,26 @@ class ImageModal extends HTMLElement {
   render () {
     this.shadow.innerHTML =
       /* html */`
-      <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-
       <style>
-        @import url('../css/generic-shadow.css');
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        *::-webkit-scrollbar {
+          width: 5px;
+        }
+        *::-webkit-scrollbar-track {
+          background: none;
+        }
+        *::-webkit-scrollbar-thumb {
+          background: var(--tertiary-color,rgb(150, 156, 172));
+          border-radius: 10px;
+        }
+        button:hover {
+          filter: brightness(1.1);
+          transform: scale(1.1)
+        }
         .modal-container {
           position: fixed;
           top: 0;
@@ -39,55 +52,46 @@ class ImageModal extends HTMLElement {
           display: none;
           justify-content: center;
           align-items: center;
-          background-color: rgb(0,0,0,0.2);
-          backdrop-filter: blur(2px);
+          background-color: rgb(0,0,0,0.3)
         }
         .modal-container:has(.active) {
           display: flex;
         }
         .modal {
-          max-width: min(95vw, 800px);
-          width: 100%;
+          width: 50%;
           overflow: hidden;
-          border-radius: 5px;
-          background: var(--color-white);
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
+          background-color: var(--secondary-color, rgb(94, 55, 81));
+          border-radius: 1rem;
         }
         header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background: var(--color-primary);
-          color: var(--color-white);
-          padding: 10px 20px;
-        }
-        header h2 {
-          color: var(--color-white);
+          padding: 2%;
+          background-color: var(--primary-color, rgb(0, 56, 168));
+          border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
         }
         .close {
           background: none;
           border: none;
-          color: var(--color-white, white);
+          color: var(--white, white);
           cursor: pointer;
-          font-size: 25px;
-          width: 25px;
+          font-size: 1.5rem;
+          font-weight: bold;
         }
         main {
-          height: 50vh;
+          height: 60vh;
           display: flex;
           justify-content: space-between;
-          padding: 0 20px;
         }
         .gallery {
           width: 100%;
           display: flex;
           flex-wrap: wrap;
+          gap: 5%;
+          margin: 1%;
+          padding: 3%;
           overflow-y: auto;
-          gap: 10px;
-          justify-content: flex-start;
-          align-content: flex-start;
         }
         .image-container, .gallery .add-image {
           --size: 8rem;
@@ -95,19 +99,18 @@ class ImageModal extends HTMLElement {
           height: var(--size);
           display: block;
           overflow: hidden;
-          border: 3px solid var(--color-interface);
+          border: var(--border,3px solid rgba(0, 0, 0, 0.2));
           border-radius: 0.5rem;
           cursor: pointer;
-          margin: 5px;
-          transition: transform 0.3s;
           &:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
           }
         }
         .gallery .add-image {
           display: flex;
           justify-content: center;
           align-items: center;
+          background-color: var(--tertiary-color,rgb(150, 156, 172));
           color: rgb(0,0,0,0.2);
           font-size: 4rem;
         }
@@ -117,7 +120,7 @@ class ImageModal extends HTMLElement {
         .image-container {
           position: relative;
           &.selected {
-            border-color: var(--color-primary);
+            border-color: var(--green, green);
           }
         }
         .image {
@@ -131,61 +134,86 @@ class ImageModal extends HTMLElement {
           top: 0;
           right: 0;
           display: none;
+          padding: 3% 5%;
+          background-color: var(--red, red);
+          color: var(--white, white);
           border: none;
           border-radius: 0 0 0 0.5rem;
+          font-size: 1rem;
           cursor: pointer;
-          padding: 4px;
-          color: var(--color-danger);
+          &:hover {
+            transform: none;
+            filter: brightness(0.9);
+          }
         }
         .image-container:hover .delete-image {
           display: block;
         }
         form {
+          padding: 3%;
+          border-left: var(--border,3px solid rgba(0, 0, 0, 0.2));
         }
         input,label {
           display: block;
+          margin-bottom: 5%;
         }
         input {
+          padding: 3%;
+          background-color: var(--white, white);
           border: none;
+          border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
           border-radius: 0.2rem 0.2rem 0 0;
           font: inherit;
         }
         input:focus {
           outline: none;
+          border-color: var(--green, green)
         }
         footer {
           display: flex;
           justify-content: flex-end;
-          padding: 0 20px 20px;
+          padding: 2%;
+          border-top: var(--border,3px solid rgba(0, 0, 0, 0.2));
         }
         .submit-button {
+          padding: 1% 3%;
+          background-color: var(--tertiary-color,rgb(150, 156, 172));
+          color: var(--black,black);
+          border: var(--border,3px solid rgba(0, 0, 0, 0.2));
           border-radius: 0.5rem;
           cursor: pointer;
           font: inherit;
-          min-width: 130px;
-          padding: 8px 12px;
-          border: 2px solid var(--color-danger);
-          border-radius: 5px;
-          cursor: pointer;
-          background: none;
-          font-weight: bold;
-          font-size: var(--font-size-base);
+          &:disabled {
+            pointer-events: none;
+            filter: brightness(0.8)
+          }
         }
+        
       </style>
       <div class="modal-container">
         <div class="modal">
           <header>
-            <h2 class="title">Galería</h2>
-            <button class="close material-icons">highlight_off</button>
+            <h2 class="title">Imagen destacada</h2>
+            <button class="close">X</button>
           </header>
           <main>
             <div class="gallery">
               <label class="add-image" for="image">+</label>
               <input type="file" accept="image/png, image/gif, image/jpeg, image/webp" name="file" id="image">
             </div>
+            <form>
+              <div class="form-element">
+                <label for="title">Título:</label>
+                <input type="text" name="title" id="title">
+              </div>
+              <div class="form-element">
+                <label for="alt">Texto alternativo:</label>
+                <input type="text" name="alt" id="alt">
+              </div>
+            </form>
           </main>
           <footer>
-            <button class="submit-button primary" disabled>Guardar</button>
+            <button class="submit-button" disabled>Añadir</button>
           </footer>
         </div>
       </div>
@@ -223,8 +251,10 @@ class ImageModal extends HTMLElement {
       if (event.target.closest('.submit-button')) {
         let image = store.getState().images.imageGallery
         const selectedImage = this.shadow.querySelector('.image-container.selected .image')
-        const filename = selectedImage.alt;
-        image = { ...image, filename }
+        const title = this.shadow.querySelector('#title').value
+        const alt = this.shadow.querySelector('#alt').value
+        const filename = selectedImage.alt
+        image = { ...image, title, alt, filename }
         store.dispatch(showImage(image))
         modal.classList.remove('active')
       }
@@ -268,8 +298,8 @@ class ImageModal extends HTMLElement {
     image.title = file
     image.alt = file
     image.classList.add('image')
-    deleteImage.innerHTML = 'delete'
-    deleteImage.classList.add('delete-image', 'material-icons')
+    deleteImage.innerHTML = 'x'
+    deleteImage.classList.add('delete-image')
     container.appendChild(deleteImage)
     container.appendChild(image)
     gallery.appendChild(container)

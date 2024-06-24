@@ -1,29 +1,8 @@
-<!-- <!DOCTYPE html>
-<html lang="es-ES">
+<header-component title="Faqs"></header-component>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel administración</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <script type="module" src="js/app.js"></script>
-</head>
-
-<body>
-    <header>
-        <title-component title="Faqs"></title-component>
-        <menu-component></menu-component>
-    </header>
-    <main>
-        <crud-component>
-            <data-list-component slot="data-list" endpoint="/api/admin/users"></data-list-component>
-            <data-add-component slot="data-add" endpoint="/api/admin/users"></data-add-component>
-        </crud-component>
-    </main>
-</body>
-
-</html> -->
+<main>
+  <crud-component>
+      <faqs-data-list-component slot="data-list" endpoint="/api/admin/faqs"></faqs-data-list-component>
+      <faqs-data-add-component slot="data-add" endpoint="/api/admin/faqs"></faqs-data-add-component>
+  </crud-component>
+</main>

@@ -14,15 +14,8 @@ const entities = {
     tokenModel: sequelizeDb.CustomerActivationToken,
     resetPasswordTokenModel: sequelizeDb.CustomerResetPasswordToken,
     credentialModel: sequelizeDb.CustomerCredential
-  },
-  customer: {
-    model: sequelizeDb.Customer,
-    tokenModel: sequelizeDb.CustomerActivationToken,
-    resetPasswordTokenModel: sequelizeDb.CustomerResetPasswordToken,
-    credentialModel: sequelizeDb.CustomerCredential
   }
 }
-
 
 module.exports = class AuthorizationService {
   createActivationToken = async (id, type) => {

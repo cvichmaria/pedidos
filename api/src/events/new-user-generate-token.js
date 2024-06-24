@@ -1,22 +1,18 @@
-const AuthorizationService = require('../services/authorization-service')
+const EmailService = require('../services/email-service')
 
 exports.handleEvent = async (redisClient, subscriberClient) => {
-  subscriberClient.subscribe('new-user', (err) => {
+  subscriberClient.subscribe('new-user-token', (err) => {
     if (err) {
       console.error('Error al suscribirse al canal:', err)
     }
   })
 
   subscriberClient.on('message', async (channel, message) => {
-    if (channel === 'new-user') {
-      const user = JSON.parse(message)
-      const authorizationService = new AuthorizationService()
-      const activationUrl = await authorizationService.createActivationToken(user.id, 'user')
+    if (channel === 'new-user-token') {
+      const emailService = new EmailService('gmail')
+      const data = JSON.parse(message)
 
-      redisClient.publish('new-user-token', JSON.stringify({
-        activationUrl,
-        user
-      }))
+      emailService.sendEmail(data.user, 'user', 'activationUrl', data)
     }
   })
 }

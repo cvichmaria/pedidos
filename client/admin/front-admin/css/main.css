@@ -1,63 +1,34 @@
-/* VARIABLES */
 :root {
-  /* COLORS */
-  --color-primary: #4d44d8; /* Color principal del backoffice */
-  --color-secondary: #6C757D; /* Color secundario del backoffice */
-  
-  --color-success: hsl(134, 61%, 41%); /* Color para mensajes de éxito */
-  --color-danger: hsl(354, 70%, 54%); /* Color para mensajes de error */
-  --color-warning: hsl(45, 100%, 51%); /* Color para mensajes de advertencia */
-  --color-info: hsl(188, 78%, 41%); /* Color para mensajes de información */
-  --color-primary-bg: hsla(248, 100%, 50%, 0.1);
-  --color-success-bg: hsla(134, 61%, 41%, 0.1); 
-  --color-danger-bg: hsla(354, 70%, 54%, 0.1);
-  --color-warning-bg: hsla(45, 100%, 51%, 0.1);
-  --color-info-bg: hsla(197, 100%, 50%, 0.1);
-  
-  --color-light: #F8F9FA; /* Color para fondos claros */
-  --color-dark: #343A40; /* Color para fondos oscuros */
-
-  --color-body: #212529; /* Color principal del texto */
-  --color-muted: #6C757D; /* Color para texto secundario */
-
-  --color-white: #FFFFFF; /* Color blanco */
-  --color-black: #000000; /* Color negro */
-
-  --color-interface: rgba(0, 0, 0, 0.1);
-  --color-scrollbar: #A9A9A9;
-
-
-  /* FONTS */
-  --font-family-sans: Arial, sans-serif; /* Familia de fuente sans-serif */
-
-  --font-size-base: 0.9rem; /* Tamaño de fuente base */
-  --font-size-lg: 1.15rem; /* Tamaño de fuente grande */
-  --font-size-sm: 0.8rem; /* Tamaño de fuente pequeño */
-
-  --font-weight-normal: 400; /* Peso de fuente normal */
-  --font-weight-bold: 700; /* Peso de fuente negrita */
-
-  --line-height-base: 1.5; /* Altura de línea base */
-  --line-height-sm: 1.25; /* Altura de línea pequeña */
-  --line-height-lg: 1.75; /* Altura de línea grande */
-
-  --letter-spacing-normal: normal; /* Espaciado de letras normal */
-  --letter-spacing-wide: 0.1em; /* Espaciado de letras amplio */
+    --primary-color: rgb(0, 56, 168);
+    --secondary-color: rgb(94, 55, 81);
+    --tertiary-color: rgb(150, 156, 172);
+    --grey-white: rgb(187, 194, 212);
+    --grey-black: rgb(32, 39, 55);
+    --black: rgb(17, 23, 39);
+    --white: rgb(203, 219, 235);
+    --red: rgb(153, 31, 24);
+    --green: rgb(34, 156, 34);
+    --sahdow: 5px 5px 0px 0px rgba(0, 0, 0, 0.2);
+    --border: 3px solid rgba(0, 0, 0, 0.2);
 }
-
-
-
-/* COLORS */
 body {
-  color: var(--color-body);
-  background-color: var(--color-light);
+    box-sizing: border-box;
+    overflow-x: hidden;
+    background-color: var(--black,black);
+    color: var(--white,white);
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
-
-/* FONTS */
-body {
-  font-family: var(--font-family-sans);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-base);
-  letter-spacing: var(--letter-spacing-normal);
+/* Concrertos */
+.tabs {
+  display: flex;
+}
+.tab {
+  width: 100%;
+  height: 100%;
+  padding: 0 10%;
+  background-color: var(--primary-color,rgb(0, 56, 168));
+  cursor: pointer;
+}
+.tab.selected {
+  filter: brightness(0.8);
 }

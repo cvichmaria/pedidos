@@ -4,21 +4,20 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Panel administración</title>
-        <link rel="stylesheet" href="css/style.css">
+        <title>Admin Panel</title>
+        <link rel="stylesheet" href="css/main.css">
         <script type="module" src="js/app.js"></script>
 </head>
 <body>
-  <header>
-      
-      <title-component title="Clientes"></title-component>
-      <menu-component></menu-component>
-  </header>
-  <main>
-    <crud-component>
-      <data-list-component slot="data-list" endpoint="/api/admin/users"></data-list-component>
-      <data-add-component slot="data-add" endpoint="/api/admin/users"></data-add-component>
-  </crud-component>
-  </main>
+    <header>
+        <title-component title="Clientes"></title-component>
+        <menu-component></menu-component>
+    </header>
+    <main>
+        <crud-component>
+            <clients-data-list-component slot="data-list" endpoint="/api/admin/users"></clients-data-list-component>
+            <clients-data-add-component slot="data-add" endpoint="/api/admin/users"></clients-data-add-component>
+        </crud-component>
+    </main>
 </body>
 </html>

@@ -1,83 +1,125 @@
 class Reset extends HTMLElement {
-  constructor() {
-    super();
-    this.shadow = this.attachShadow({ mode: 'open' });
+  constructor () {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback() {
-    this.render();
+  connectedCallback () {
+    this.render()
   }
 
-  render() {
+  render () {
     this.shadow.innerHTML =
       /* html */`
       <style>
-        .reset {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          font-family: Arial, sans-serif;
-          background-color: #f5f5f5;
-        }
-        
-        .reset-container {
-          background-color: #fff;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          width: 100%;
-          max-width: 400px;
-        }
-        
-        .reset-title {
-          font-size: 24px;
-          margin-bottom: 20px;
-          text-align: center;
-          color: #333;
-        }
-        
-        .reset-input {
-          width: 100%;
-          padding: 10px;
-          margin-bottom: 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+        * {
+          margin: 0;
+          padding: 0;
           box-sizing: border-box;
         }
-        
-        .reset-button {
-          width: 100%;
-          padding: 10px;
+        .reset {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .reset-box {
+          width: 30rem;
+          min-height: 20rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: stretch;
+          overflow: hidden;
+          background-color: var(--secondary-color,rgb(94, 55, 81));
+          border-radius: 1rem;
+          box-shadow: var(--sahdow,5px 5px 0px 0px rgba(0, 0, 0, 0.2));
+          header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5%;
+            background-color: var(--primary-color,rgb(0, 56, 168));
+            border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
+          }
+        }
+        .logo {
+          --size: 2rem;
+          width: var(--size);
+          height: var(--size);
+        }
+        .reset-form {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: center;
+          padding: 1%;
+        }
+        input {
+          width: 95%;
+          height: 2rem;
+          margin-top: 2%;
+          padding: 1% 2%;
+          background-color: var(--white,white);
+          color: var(--black,black);
           border: none;
-          border-radius: 4px;
-          background-color: #007BFF;
-          color: white;
-          font-size: 16px;
+          border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
+          border-width: 5px;
+          border-radius: 5px 5px 0 0;
+          resize: none;
+        }
+        input:focus {
+          border-color: var(--green, green);
+          outline: none;
+        }
+        .buttons {
+          width: 100%;
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+          align-items: center;
+          padding: 3%;
+        }
+        .forgot {
+          color: inherit;
+          font: inherit;
+          text-decoration: none;
+          &:hover {
+            filter: brightness(0.9);
+          }
+        }
+        .reset-button {
+          padding: 3%;
+          color: inherit;
+          background-color: var(--primary-color,rgb(0, 56, 168));
+          border: none;
+          border-radius: 0.5rem;
+          font: inherit;
           cursor: pointer;
-        }
-        
-        .reset-button:hover {
-          background-color: #0056b3;
-        }
-        
-        .reset-message {
-          margin-top: 10px;
-          text-align: center;
-          color: #666;
+          box-shadow: var(--sahdow,5px 5px 0px 0px rgba(0, 0, 0, 0.2));
+          &:hover {
+            filter: brightness(0.9);
+          }
         }
       </style>
       <div class="reset">
-        <div class="reset-container">
-          <div class="reset-title">Reset Password</div>
-          <input type="email" class="reset-input" placeholder="Enter your email">
-          <button class="reset-button">Send Reset Link</button>
-          <div class="reset-message">Please enter your email to receive a reset link.</div>
+        <div class="reset-box">
+          <header>
+      
+            <h2>Reset</h2>
+          </header>
+          <form class="reset-form">
+            <input type="email" name="email" placeholder="email">
+            <div class="buttons">
+              <button class="reset-button">Reset password</button>
+            </div>
+          </form>
         </div>
       </div>
-      `;
+      `
   }
 }
 
-customElements.define('reset-component', Reset);
+customElements.define('reset-component', Reset)

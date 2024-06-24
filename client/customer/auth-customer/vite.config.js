@@ -1,6 +1,6 @@
 export default {
-  base: '/cliente',
+  base: '/cliente/login',
   server: {
-    port: 5173
+    port: 5172
   }
 }

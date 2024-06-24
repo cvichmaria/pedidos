@@ -1,20 +1,22 @@
-const moment = require('moment')
 const sequelizeDb = require('../../models/sequelize')
 const User = sequelizeDb.User
-const EmailService = require('../../services/email-service')
+const Op = sequelizeDb.Sequelize.Op
 
-exports.create = async (req, res) => {
-  try {
-    User.create(req.body).then(async data => {
-      req.redisClient.publish('new-user', JSON.stringify(data))
-      res.status(200).send(data)
-    })
-  } catch (err) {
-    console.log(err)
-    res.status(500).send({
-      message: err.errors || 'Algún error ha surgido al insertar el dato.'
-    })
-  }
+exports.create = (req, res) => {
+  User.create(req.body).then(async data => {
+    req.redisClient.publish('new-user', JSON.stringify(data))
+    res.status(200).send(data)
+  }).catch(err => {
+    if (err.errors) {
+      res.status(422).send({
+        message: err.errors
+      })
+    } else {
+      res.status(500).send({
+        message: 'Algún error ha surgido al insertar el dato.'
+      })
+    }
+  })
 }
 
 exports.findAll = (req, res) => {
@@ -54,17 +56,10 @@ exports.findAll = (req, res) => {
     })
 }
 
-exports.findOne = async (req, res) => {
+exports.findOne = (req, res) => {
   const id = req.params.id
 
-  try {
-    const data = await User.findById(id).lean().exec()
-
-    if (data) {
-      data.id = data._id
-      delete data._id
-    }
-
+  User.findByPk(id).then(data => {
     if (data) {
       res.status(200).send(data)
     } else {
@@ -72,20 +67,20 @@ exports.findOne = async (req, res) => {
         message: `No se puede encontrar el elemento con la id=${id}.`
       })
     }
-  } catch (err) {
+  }).catch(_ => {
     res.status(500).send({
       message: 'Algún error ha surgido al recuperar la id=' + id
     })
-  }
+  })
 }
 
-exports.update = async (req, res) => {
+exports.update = (req, res) => {
   const id = req.params.id
-  req.body.images = await req.imageService.resizeImages(req.body.images)
-  try {
-    const data = await User.findByIdAndUpdate(id, req.body, { new: true })
 
-    if (data) {
+  User.update(req.body, {
+    where: { id }
+  }).then(([numberRowsAffected]) => {
+    if (numberRowsAffected === 1) {
       res.status(200).send({
         message: 'El elemento ha sido actualizado correctamente.'
       })
@@ -94,31 +89,31 @@ exports.update = async (req, res) => {
         message: `No se puede actualizar el elemento con la id=${id}. Tal vez no se ha encontrado el elemento o el cuerpo de la petición está vacío.`
       })
     }
-  } catch (err) {
+  }).catch(_ => {
     res.status(500).send({
-      message: 'Algún error ha surgido al actualizar la id=' + id
+      message: 'Algún error ha surgido al actualiazar la id=' + id
     })
-  }
+  })
 }
 
-exports.delete = async (req, res) => {
+exports.delete = (req, res) => {
   const id = req.params.id
 
-  try {
-    const data = await User.findByIdAndUpdate(id, { deletedAt: new Date() })
-
-    if (data) {
+  User.destroy({
+    where: { id }
+  }).then((numberRowsAffected) => {
+    if (numberRowsAffected === 1) {
       res.status(200).send({
-        message: 'El elemento ha sido borrado correctamente.'
+        message: 'El elemento ha sido borrado correctamente'
       })
     } else {
       res.status(404).send({
         message: `No se puede borrar el elemento con la id=${id}. Tal vez no se ha encontrado el elemento.`
       })
     }
-  } catch (err) {
+  }).catch(_ => {
     res.status(500).send({
       message: 'Algún error ha surgido al borrar la id=' + id
     })
-  }
+  })
 }

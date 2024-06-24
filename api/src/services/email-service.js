@@ -66,7 +66,6 @@ module.exports = class EmailService {
     return myAccessToken
   }
 
-  //se utiliza una libreria que carga la plantilla situada en templates/emails
   sendEmail (user, userType, template, data, attachments = []) {
     try {
       if (!user.language) user.language = 'es'
