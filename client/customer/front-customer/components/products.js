@@ -46,6 +46,7 @@ class Products extends HTMLElement {
           padding: 0;
           box-sizing: border-box;
           font-size: 1.25rem;
+          background-color: white;
         }
         .products {
           height: 90vh;
