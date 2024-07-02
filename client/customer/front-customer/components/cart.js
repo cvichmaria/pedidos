@@ -5,6 +5,7 @@ class Cart extends HTMLElement {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.unsubscribe = null
+    this.products = []
   }
 
   connectedCallback () {
@@ -17,6 +18,12 @@ class Cart extends HTMLElement {
       }
     })
     this.render()
+  }
+
+  disconnectedCallback() {
+    if (this.unsubscribe) {
+      this.unsubscribe()
+    }
   }
 
   render () {
@@ -49,6 +56,9 @@ class Cart extends HTMLElement {
                 box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
                 transform: translateX(100%);
                 transition: transform 0.3s ease-in-out;
+            }
+            .cart-container.show-cart {
+                transform: translateX(0);
             }
             .cart {
                 display: flex;
@@ -101,6 +111,14 @@ class Cart extends HTMLElement {
                 visibility: hidden;
                 transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
             }
+            .modal-background.show-modal {
+                opacity: 1;
+                visibility: visible;
+            }
+            .cart-container.show-modal{
+              opacity: 1;
+              visibility: visible;
+            }
             .modal {
                 background-color: white;
                 padding: 20px;
@@ -139,50 +157,52 @@ class Cart extends HTMLElement {
                 text-decoration: none;
                 border-radius: 5px;
             }
-            .show-cart {
-                transform: translateX(0);
-            }
-            .show-modal {
-                opacity: 1;
-                visibility: visible;
+            .content {
+              display: flex;
+              justify-content: flex-end;
             }
         </style>
-        <button class="order-button">Ver pedido</button>
-        <div class="cart-container">
-            <div class="cart">
-                <header class="cart-header">
-                    <h3>Pedido</h3>
-                    <button class="close">X</button>
-                </header>
-                <div class="product-gallery"></div>
-                <p class="total">Total: <span class="total-price"></span>€</p>
-                <button class="buy-button">Confirmar</button>
-            </div>
-        </div>
-        <div class="modal-background">
-            <div class="modal">
-                <header class="modal-header">
-                    <h3>Pedido realizado correctamente</h3>
-                    <button class="close-modal">x</button>
-                </header>
-                <main class="modal-main">
-                    <h5 class="modal-title">Disfruta de tu compra</h5>
-                    <p>Pedido realizado</p>
-                    <p>Referencia: <span class="order-reference"></span></p>
-                    <a href="/cliente" class="home-button">Volver</a>
-                </main>
-            </div>
+        <div class="content">
+          <button class="order-button">Ver pedido</button>
+          <div class="cart-container">
+              <div class="cart">
+                  <header class="cart-header">
+                      <h3>Pedido</h3>
+                      <button class="close">X</button>
+                  </header>
+                  <div class="product-gallery"></div>
+                  <p class="total">Total: <span class="total-price"></span>€</p>
+                  <button class="buy-button">Confirmar</button>
+              </div>
+          </div>
+          <div class="modal-background">
+              <div class="modal">
+                  <header class="modal-header">
+                      <h3>Pedido realizado correctamente</h3>
+                      <button class="close-modal">x</button>
+                  </header>
+                  <main class="modal-main">
+                      <h5 class="modal-title">Disfruta de tu compra</h5>
+                      <p>Pedido realizado</p>
+                      <p>Referencia: <span class="order-reference"></span></p>
+                      <a href="/cliente" class="home-button">Volver</a>
+                  </main>
+              </div>
+          </div>
         </div>
       `
-    const modal = this.shadow.querySelector('.modal-background')
+
+    const cartContainer = this.shadow.querySelector('.cart-container')
+    const modalBackground = this.shadow.querySelector('.modal-background')
+
     this.shadow.addEventListener('click', async (event) => {
       if (event.target.closest('.order-button')) {
         event.preventDefault()
-        this.shadow.querySelector('.cart').classList.add('active')
+        cartContainer.classList.add('show-cart')
       }
       if (event.target.closest('.close')) {
         event.preventDefault()
-        this.shadow.querySelector('.cart').classList.remove('active')
+        cartContainer.classList.remove('show-cart')
       }
       if (event.target.closest('.buy-button')) {
         event.preventDefault()
@@ -190,7 +210,6 @@ class Cart extends HTMLElement {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            // Authorization: 'Bearer ' + localStorage.getItem('customerAccessToken')
           },
           body: JSON.stringify({
             products: this.products
@@ -199,15 +218,15 @@ class Cart extends HTMLElement {
         const data = await response.json()
         console.log(data)
         this.shadow.querySelector('.order-reference').innerHTML = data.reference
-        modal.classList.add('active')
+        modalBackground.classList.add('show-modal')
       }
     })
-    modal.addEventListener('click', (event) => {
+
+    modalBackground.addEventListener('click', (event) => {
       if (!event.target.closest('.modal') || event.target.closest('.close-modal')) {
-        modal.classList.remove('active')
+        modalBackground.classList.remove('show-modal')
       }
     })
-    
   }
 
   updateCart (products) {

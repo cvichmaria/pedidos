@@ -5,15 +5,41 @@ class Products extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.products = [  
+    ]
   }
 
   connectedCallback () {
-    this.loadData().then(() => this.render())
+    this.loadData().then(() => this.render());
+    this.products = []
   }
 
   async loadData() {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
-    this.products = await response.json()
+    this.products = [  {
+      id: 1,
+      name: 'Product 1',
+      price: { basePrice: 10 },
+      units: 1,
+      measurement: '500',
+      measurementUnit: 'g'
+    },
+    {
+      id: 2,
+      name: 'Product 2',
+      price: { basePrice: 20 },
+      units: 1,
+      measurement: '1',
+      measurementUnit: 'L'
+    },
+    {
+      id: 3,
+      name: 'Product 3',
+      price: { basePrice: 15 },
+      units: 1,
+      measurement: '250',
+      measurementUnit: 'ml'
+    }]
   }
 
   render () {

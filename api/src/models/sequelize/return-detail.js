@@ -89,7 +89,7 @@ module.exports = function (sequelize, DataTypes) {
       ReturnDetail.belongsTo(models.Product, { as: 'product', foreignKey: 'productId' })
       ReturnDetail.belongsTo(models.Price, { as: 'price', foreignKey: 'priceId' })
     }
-  
     return ReturnDetail
+    
   }
   

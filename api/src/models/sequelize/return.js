@@ -7,6 +7,10 @@ module.exports = function (sequelize, DataTypes) {
           primaryKey: true,
           allowNull: false
         },
+        saleId: {
+          type: DataTypes.INTEGER,
+          allowNull: false
+        },
         customerId: {
           type: DataTypes.INTEGER
         },
