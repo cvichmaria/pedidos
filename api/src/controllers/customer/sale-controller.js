@@ -23,7 +23,6 @@ exports.findByCustomer = (req, res) => {
     .then(result => {
       res.status(200).send(result)
     }).catch(err => {
-      console.log('---------------error-------------', err)
       res.status(500).send({
         message: err.errors || 'Algún error ha surgido al recuperar los datos.'
       })

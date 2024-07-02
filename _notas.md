@@ -32,8 +32,11 @@ creamos sale controller
 
 ____
 
-como se gestionan las ventas, hay una tabal de sale y otra de sale_detail
+como se gestionan las ventas, h
+
+
 - al hacer una venta va a llegar en el cotrolador uncreate que es donde se gestiona. ahora llegan los datos
+
 
 
 Como una bbdd va a contemplar las devoluciones?
@@ -78,3 +81,6 @@ a parte del precio total se necesita
 contraseña noel $08$En.gZTIRQJU8EHFO.UjK3OFwhW/zX2.jL8fHo9tpEc5jTTg4tJwPW
 
 en carts, hay que coger la referencia 
+
+
+dar al boton de devolver y se tiene que registrar en la tabla que ese peidod ha sido devuelto
