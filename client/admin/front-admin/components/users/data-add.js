@@ -1,5 +1,5 @@
-import { store } from '../../redux/store.js'
 import { removeImages, showImages } from '../../redux/images-slice.js'
+import { store } from '../../redux/store.js'
 class UsersDataAdd extends HTMLElement {
   constructor () {
     super()
@@ -18,159 +18,106 @@ class UsersDataAdd extends HTMLElement {
   render () {
     this.shadow.innerHTML =
       /* html */`
-        <style>
-            svg {
-              width: 30px;
-            }
-            svg * {
-              fill: var(--white,white);
-            }
-            button {
-              background: none;
-              color: inherit;
-              border: none;
-              cursor: pointer;
-            }
-            button:has( svg):hover {
-              animation: shake 0.2s ease-in forwards;
-            }
-            label {
-              display: block;
-            }
-            input {
-              display: block;
-            }
-            *::-webkit-scrollbar {
-              width: 5px;
-            }
-            *::-webkit-scrollbar-track {
-              background: none;
-            }
-            *::-webkit-scrollbar-thumb {
-              background: var(--primary-color,rgb(0, 56, 168));
-              border-radius: 10px;
-            }
-            label {
-              margin-right: 1%;
-              color: var(--tertiary-color,rgb(150, 156, 172));
-              font-weight: bold;
-            }
-            main {
-              overflow: hidden;
-              background-color: var(--secondary-color,rgb(94, 55, 81));
-              border-radius: 20px;
-              box-shadow: var(--sahdow,5px 5px 0px 0px rgba(0, 0, 0, 0.2))
-            }
-            header {
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: space-between;
-              align-items: center;
-              background-color: var(--primary-color, rgb(0, 56, 168));
-              border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
-            }
-            .tabs {
-              display: flex;
-            }
-            .tab {
-              width: 100%;
-              height: 100%;
-              padding: 0 10%;
-              background-color: var(--primary-color,rgb(0, 56, 168));
-              cursor: pointer;
-            }
-            .tab.selected {
-              filter: brightness(0.8);
-            }
-            .tab-content .tab {
-              padding: 0 30%;
-            }
-            .add-buttons {
-              padding: 0 2%;
-            }
-            form {
-              padding: 2%;
-            }
-            .tab-content {
-              display: none;
-            }
-            .tab-content.selected {
-              display: block;
-            }
-            .error-message {
-              color: orange;
-            }
-            .form-row {
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: space-between;
-            }
-            .form-field {
-              flex: 1;
-              margin: 1% 0;
-              padding: 1%;
-            }
-            .form-field input, .form-field textarea, .form-field select{
-              width: 95%;
-              height: 2rem;
-              margin-top: 2%;
-              padding: 1% 2%;
-              background-color: var(--white,white);
-              color: var(--black,black);
-              border: none;
-              border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
-              border-width: 5px;
-              border-radius: 5px 5px 0 0;
-              resize: none;
-              &:focus {
-                outline: none;
-                border-color: var(--green, rgb(34, 156, 34));
-              }
-            }
-            .form-field select option {
-              border-radius: 0;
-            }
-            .invalid {
-              border-color: var(--red,rgb(153, 31, 24));
-            }
-            .valid {
-              border-color: var(--green,rgb(34, 156, 34));
-            }
-            textarea {
-              min-height: 5rem;
-              font: inherit;
-            }
-            input[type="number"]::-webkit-outer-spin-button,
-            input[type="number"]::-webkit-inner-spin-button {
-              appearance: none;
-            }
-            input[type="file"] {
-              display: none;
-            }
-            /* Animaciones */
-            @keyframes shake {
-              0% {
-                transform: scale(1) rotate(0deg);
-              }
-              25% {
-                transform: scale(1.1) rotate(20deg);
-              }
-              75% {
-                transform: scale(1.1) rotate(-20deg);
-              }
-              100% {
-                transform: scale(1.1) rotate(0deg);
-              }
-            }
-            /*Media queries*/
-            @media (max-width: 1000px) {
-              .form-field {
-                width: 100%;
-                flex: none;
-              }
-            }
-        </style>
+      <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+
+      <style>
+        @import url('../css/generic-shadow.css');
+    label {
+        color: var(--color);
+        font-weight: bold;
+    }
+    main {
+      
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--color-interface);
+    }
+    .tabs {
+        display: flex;
+        gap: 10px;
+    }
+    .tab {
+        width: 100%;
+        padding: 5px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transform: translateY(2px);
+        transition: all 0.3s;
+    }
+    .tab.selected {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+    }
+    .tab.selected h3 {
+      color: var(--color-primary);
+    }
+    .tab-content .tab {
+        padding: 5px;
+    }
+    .add-buttons {
+        display: flex;
+    gap: 10px;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.selected {
+      display: block;
+    }
+    .error-message {
+      color: orange;
+    }
+    .main-form{
+      padding: 5px;
+      border-radius: 5px;
+      background: var(--color-white);
+      box-shadow: 0px 0px 3px 0px rgb(0 0 0 / 25%);
+      margin: 5px;
+      margin-top: 13px;
+    }
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .form-field {
+        flex: 1;
+        margin: 5px 0;
+        padding: 5px;
+        display: flex;
+    gap: 5px;
+    flex-direction: column;
+    }
+    .form-field input, .form-field textarea {
+        height: 1.5rem;
+        margin-top: 5px;
+        padding: 5px;
+        background-color: var(--color-white);
+        resize: none;
+        border: 1px solid var(--color-interface);
+        border-radius: 5px;
+        font: inherit;
+        font-size: var(--font-size-sm);
+    }
+    .invalid {
+        border-color:red;
+    }
+    textarea {
+        min-height: 3rem;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        appearance: none;
+    }
+    input[type="file"] {
+        display: none;
+    }
+</style>
         <main>
+
           <header>
             <div class="tabs">
               <div class="tab selected" data-field="principal">
@@ -181,53 +128,49 @@ class UsersDataAdd extends HTMLElement {
               </div>
             </div>
             <div class="add-buttons">
-              <button class="clean-button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21.19,11.34L12,20.53C10.44,22.09 7.91,22.09 6.34,20.53L2.81,17C2.03,16.21 2.03,14.95 2.81,14.16L13.41,3.56C14.2,2.78 15.46,2.78 16.24,3.56M4.22,15.58L7.76,19.11C8.54,19.9 9.8,19.9 10.59,19.11L14.12,15.58L9.17,10.63L4.22,15.58Z" />
-                </svg>
-              </button>
-              <button class="save-button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
-                </svg>
-              </button>
-            </div>
+            <button class="clean-button material-icons warning custom-btn">
+            restart_alt
+            </button>
+            <button class="save-button material-icons primary custom-btn">
+              save
+            </button>
+            </div>  
           </header>
           <form class="main-form">
-            <input type="hidden" name="id">
-            <notification-component></notification-component>
-            <div class="error-message"></div>
-            <div class="tab-content selected" data-field="principal">
-              <div class="form-row">
-                <div class="form-field">
-                  <label for="user">Nombre:</label>
-                  <input type="text" name="name">
-                </div>
-                <div class="form-field">
-                  <label for="user">Apellidos:</label>
-                  <input type="text" name="surname">
-                </div>
+          <input type="hidden" name="id">
+          <notification-component></notification-component>
+          <div class="error-message"></div>
+          <div class="tab-content selected" data-field="principal">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="user">Nombre:</label>
+                <input type="text" name="name">
               </div>
-              <div class="form-row">
-                <div class="form-field">
-                  <label for="user">Email:</label>
-                  <input type="email" name="email">
-                </div>
-                <div class="form-field">
-                  <label for="user">Teléfono:</label>
-                  <input type="tel" name="telephone">
-                </div>
+              <div class="form-field">
+                <label for="user">Apellidos:</label>
+                <input type="text" name="surname">
               </div>
             </div>
-            <div class="tab-content" data-field="images">
-              <div class="form-row">
-                <div class="form-field">
-                  <label for="avatar">Avatar:</label>
-                  <image-add-component name="avatar" image-configuration='{"xs":{"widthPx":"60","heightPx":"60"},"sm":{"widthPx":"80","heightPx":"80"},"md":{"widthPx":"120","heightPx":"120"},"lg":{"widthPx":"300","heightPx":"300"}}'></image-add-component>
-                </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="user">Email:</label>
+                <input type="email" name="email">
+              </div>
+              <div class="form-field">
+                <label for="user">Teléfono:</label>
+                <input type="tel" name="telephone">
               </div>
             </div>
-          </form>
+          </div>
+          <div class="tab-content" data-field="images">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="avatar">Avatar:</label>
+                <image-add-component name="avatar" image-configuration='{"xs":{"widthPx":"60","heightPx":"60"},"sm":{"widthPx":"80","heightPx":"80"},"md":{"widthPx":"120","heightPx":"120"},"lg":{"widthPx":"300","heightPx":"300"}}'></image-add-component>
+              </div>
+            </div>
+          </div>
+        </form>
         </main>
         <image-modal-component></image-modal-component>
       `

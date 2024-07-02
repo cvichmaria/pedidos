@@ -37,7 +37,7 @@ como se gestionan las ventas, hay una tabal de sale y otra de sale_detail
 
 
 Como una bbdd va a contemplar las devoluciones?
-- interfaz: en la parte de pedidos (todos los pedidos hechos) hay un boton de ver pedido y ahi tendrias los mismos contadores de restar y podras devolver 2 de aqui 1 de aqui, clicas al boton y vas a tener los datos:
+- interfaz restar y podras devolver 2 de aqui 1 de aqui, clicas al boton y vas a tener los datos:
  - cual es la venta a la cual se hace la devolucion
  - id del prodcuto
  - cantidad de devolucion

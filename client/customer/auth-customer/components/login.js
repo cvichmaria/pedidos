@@ -12,112 +12,99 @@ class Login extends HTMLElement {
     this.shadow.innerHTML =
       /* html */`
       <style>
-        * {
+      * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-        }
-        .login {
-          position: absolute;
-          inset: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+  
+      .login {
           display: flex;
           justify-content: center;
           align-items: center;
-        }
-        .login-box {
-          width: 30rem;
-          min-height: 20rem;
+          height: 100vh;
+          background-color: #f5f5f5;
+      }
+  
+      .login-box {
+          background-color: #ffffff;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          padding: 2rem;
+          width: 300px;
+          text-align: center;
+      }
+  
+      header h2 {
+          font-size: 1.5rem;
+          color: #333333;
+          margin-bottom: 1.5rem;
+      }
+  
+      .login-form {
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
-          align-items: stretch;
-          overflow: hidden;
-          background-color: var(--secondary-color,rgb(94, 55, 81));
-          border-radius: 1rem;
-          box-shadow: var(--sahdow,5px 5px 0px 0px rgba(0, 0, 0, 0.2));
-          header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5%;
-            background-color: var(--primary-color,rgb(0, 56, 168));
-            border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
-          }
-        }
-        .logo {
-          --size: 2rem;
-          width: var(--size);
-          height: var(--size);
-        }
-        .login-form {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-evenly;
           align-items: center;
-          padding: 1%;
-        }
-        input {
-          width: 95%;
-          height: 2rem;
-          margin-top: 2%;
-          padding: 1% 2%;
-          background-color: var(--white,white);
-          color: var(--black,black);
-          border: none;
-          border-bottom: var(--border,3px solid rgba(0, 0, 0, 0.2));
-          border-width: 5px;
-          border-radius: 5px 5px 0 0;
-          resize: none;
-        }
-        input:focus {
-          border-color: var(--green, green);
-          outline: none;
-        }
-        .buttons {
+      }
+  
+      input[type="email"],
+      input[type="password"] {
           width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 3%;
-        }
-        .forgot {
-          color: inherit;
-          font: inherit;
-          text-decoration: none;
-          &:hover {
-            filter: brightness(0.9);
-          }
-        }
-        .login-button {
-          padding: 3%;
-          color: inherit;
-          background-color: var(--primary-color,rgb(0, 56, 168));
+          padding: 0.8rem;
+          margin-bottom: 1rem;
+          border: 1px solid #cccccc;
+          border-radius: 4px;
+          font-size: 1rem;
+      }
+  
+      .buttons {
+          margin-top: 1rem;
+      }
+  
+      .login-button {
+          background-color: #007bff;
+          color: #ffffff;
           border: none;
-          border-radius: 0.5rem;
-          font: inherit;
+          padding: 0.8rem 1.5rem;
+          font-size: 1rem;
           cursor: pointer;
-          box-shadow: var(--sahdow,5px 5px 0px 0px rgba(0, 0, 0, 0.2));
-          &:hover {
-            filter: brightness(0.9);
-          }
-        }
-      </style>
-      <div class="login">
-        <div class="login-box">
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+          margin-right: 0.5rem;
+      }
+  
+      .login-button:hover {
+          background-color: #0056b3;
+      }
+  
+      .forgot {
+          color: #007bff;
+          text-decoration: none;
+          font-size: 0.9rem;
+          transition: color 0.3s ease;
+      }
+  
+      .forgot:hover {
+          color: #0056b3;
+      }
+  </style>
+  
+  <div class="login">
+      <div class="login-box">
           <header>
-            <h2>Login</h2>
+              <h2>Login</h2>
           </header>
           <form class="login-form">
-            <input type="email" name="email" placeholder="user">
-            <input type="password" name="password" placeholder="password">
-            <div class="buttons">
-              <a class="forgot" href="./login/reset">No recuerdo mi contraseña</a>
-              <button class="login-button">Login</button>
-            </div>
+              <input type="email" name="email" placeholder="user">
+              <input type="password" name="password" placeholder="password">
+              <div class="buttons">
+                  <a class="forgot" href="./login/reset">No recuerdo mi contraseña</a>
+                  <button class="login-button">Login</button>
+              </div>
           </form>
-        </div>
       </div>
+  </div>
       `
     this.shadow.querySelector('.login-form').addEventListener('submit', (event) => {
       event.preventDefault()

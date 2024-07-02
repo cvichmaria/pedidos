@@ -1,10 +1,10 @@
 class Home extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback () {
+  connectedCallback() {
     this.links = [
       {
         name: 'Nuevo pedido',
@@ -18,14 +18,21 @@ class Home extends HTMLElement {
     this.render()
   }
 
-  render () {
+  render() {
     this.shadow.innerHTML =
       /* html */`
       <style>
-        
-      </style>
-      <div class="home-menu">
-      </div>
+    
+      .home-menu {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1rem;
+      }
+      
+    </style>
+
+    <div class="home-menu">
+    </div>
       `
     this.links.forEach(link => {
       console.log(link)

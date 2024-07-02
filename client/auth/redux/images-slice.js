@@ -20,8 +20,7 @@ export const imagesSlice = createSlice({
       }
     },
     showImages: (state, action) => {
-      // {name: 'avatar', title: '', alt: '', filename: '360-F-678376151-osW7O1VqMI6ly9wOBJ2vIVRgBLhCYSa8.webp'}
-      // lg: {banner: {{originalFilename: '1583254719-1711015431497.webp', filename: '1583254719-1711015431497-300x300.webp', title: '', alt: '', widthPx: '300'}}}
+
       const data = Object.values(action.payload)[0]
       if (data) {
         state.showedImages = Object.entries(data).map(([key, value]) => ({
@@ -36,7 +35,6 @@ export const imagesSlice = createSlice({
     addImage: (state, action) => {
       if (!state.selectedImages.some(image =>
         image.name === action.payload.name &&
-        // image.languageAlias === action.payload.languageAlias &&
         image.filename === action.payload.filename)) {
         state.selectedImages.push(action.payload)
       }
@@ -44,7 +42,6 @@ export const imagesSlice = createSlice({
     removeImage: (state, action) => {
       const selectedImage = state.selectedImages.findIndex(image =>
         image.filename === action.payload.filename &&
-        // image.languageAlias === action.payload.languageAlias &&
         image.name === action.payload.name
       )
       if (selectedImage !== -1) {
@@ -52,7 +49,6 @@ export const imagesSlice = createSlice({
       }
       const showedImage = state.showedImages.findIndex(image =>
         image.filename === action.payload.filename &&
-        // image.languageAlias === action.payload.languageAlias &&
         image.name === action.payload.name
       )
       if (showedImage !== -1) {

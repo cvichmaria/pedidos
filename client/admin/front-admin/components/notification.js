@@ -17,25 +17,9 @@ class Notification extends HTMLElement {
     this.shadow.innerHTML =
       /* html */`
       <style>
-        .notification {
-            position: fixed;
-            bottom: 0;
-            right: 0;
-            display: flex;
-            align-items: center;
-            padding: 1% 5%;
-            background-color: var(--green,rgb(34, 156, 34));
-            color: var(--white,white);
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in;
-        }
-        .notification.active {
-            transform: translateX(0);
-            transition: transform 0.3s ease-in;
-        }
       </style>
       <div class="notification">
-        <h3>Guardado con exito.</h3>
+        <h3>Guardado</h3>
       </div>
       `
   }

@@ -12,15 +12,18 @@ class Header extends HTMLElement {
   render () {
     this.shadow.innerHTML =
       /* html */`
-      <style>
-   
-      </style>
-      <header>
-      
-          <title-component title="${this.title}"></title-component>
-          <slot name="button"></slot>
-          
-      </header>
+        <style>
+            header {
+
+                background-color: blue;
+                height: 50px;
+            }
+        </style>
+
+        <header>
+            <title-component title="${this.title}"></title-component>
+            <slot name="button"></slot>
+        </header>
       `
   }
 }

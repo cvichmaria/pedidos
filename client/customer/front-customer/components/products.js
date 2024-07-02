@@ -8,117 +8,102 @@ class Products extends HTMLElement {
   }
 
   connectedCallback () {
-    // this.products = [
-    //   {
-    //     id: 1,
-    //     name: 'Buzz cola light',
-    //     price: 10.00,
-    //     units: 16,
-    //     measure: 330,
-    //     measureUnit: 'ml'
-    //   },
-    //   {
-    //     id: 2,
-    //     name: 'Buzz cola con limón',
-    //     price: 10.00,
-    //     units: 16,
-    //     measure: 330,
-    //     measureUnit: 'ml'
-    //   },
-    //   {
-    //     id: 3,
-    //     name: 'Buzz cola',
-    //     price: 10.00,
-    //     units: 16,
-    //     measure: 330,
-    //     measureUnit: 'ml'
-    //   }
-    // ]
-    this.render()
+    this.loadData().then(() => this.render())
+  }
+
+  async loadData() {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${this.getAttribute('endpoint')}`)
+    this.products = await response.json()
   }
 
   render () {
     this.shadow.innerHTML =
       /* html */`
       <style>
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-size: 1.25rem;
-          background-color: white;
-        }
-        .products {
-          height: 90vh;
-          display: flex;
-          flex-direction: column;
-        }
-        .product-gallery {
-          display: flex;
-          align-items: flex-start;
-          flex-wrap: wrap;
-          flex: 1;
-          overflow: auto;
-        }
-        .product {
-          width: 22rem;
-          display: grid;
-          grid-template-areas: 
-          "name name price"
-          "details details quantity";
-          gap: 1rem;
-          margin: 1rem auto;
-          padding: 1rem;
-          border-bottom: var(--border, 3px solid rgba(0, 0, 0, 0.2));
-          border-color: var(--white, rgb(203, 219, 235));
-        }
-        .name {
-          grid-area: name;
-        }
-        .price {
-          grid-area: price;
-          text-align: end;
-        }
-        .details {
-          grid-area: details;
-        }
-        .quantity {
-          grid-area: quantity;
-          display: flex;
-          justify-content: flex-end;
-          align-items: stretch;
-          button {
-            --size: 1.5rem;
-            width: var(--size);
-            min-height: var(--size);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--primary-color, rgb(0, 56, 168));
-            color: inherit;
-            border: none;
-            font: inherit;
-            cursor: pointer;
-            &:hover {
-              filter: brightness(1.1);
-            }
-            &.substract {
-              border-radius: 0.2rem 0 0 0.2rem;
-            }
-            &.add {
-              border-radius: 0 0.2rem 0.2rem;
-            }
-          }
-        }
-        .quantity-number {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 0 0.5rem;
-          background-color: var(--white, rgb(203, 219, 235));
-          color: var(--primary-color, rgb(0, 56, 168));
-          line-height: 0;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+    
+      .products {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        background-color: #f0f0f0;
+        min-height: 100vh;
+      }
+    
+      .product-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        max-width: 1200px;
+        margin-top: 2rem;
+      }
+    
+      .product {
+        background-color: #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+    
+      .product:hover {
+        transform: translateY(-5px);
+      }
+    
+      .name {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #333333;
+      }
+    
+      .price {
+        font-size: 1.25rem;
+        color: #007bff;
+        margin-bottom: 1rem;
+      }
+    
+      .details {
+        font-size: 1rem;
+        color: #666666;
+        margin-bottom: 1rem;
+      }
+    
+      .quantity {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    
+      .quantity button {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+    
+      .quantity button:hover {
+        background-color: #0056b3;
+      }
+    
+      .quantity-number {
+        background-color: #f0f0f0;
+        color: #333333;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+      }
+    
       </style>
       <div class="products">
         <div class="product-gallery"></div>
@@ -137,9 +122,9 @@ class Products extends HTMLElement {
       name.classList.add('name')
       name.innerHTML = product.name
       price.classList.add('price')
-      price.innerHTML = `${product.price.toFixed(2)}€`
+      price.innerHTML = product.price != null ? `${product.price.basePrice}€` : `0€`;
       details.classList.add('details')
-      details.innerHTML = `${product.units}u, ${product.measure}${product.measureUnit}`
+      details.innerHTML = `${product.units}u, ${product.measurement}${product.measurementUnit}`
       quantity.classList.add('quantity')
       substract.classList.add('substract')
       substract.innerHTML = '-'

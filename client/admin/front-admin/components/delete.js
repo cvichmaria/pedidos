@@ -21,7 +21,7 @@ class Delete extends HTMLElement {
         </style>
         <div class="delete modal">
             <div class="modal-content">
-                <h3>¿Seguro que quieres borrar?</h3>
+                <h3>¿Seguro que quieres eliminarlo?</h3>
                 <div class="buttons">
                     <button class="confirm">Si</button>
                     <button class="close">No</button>

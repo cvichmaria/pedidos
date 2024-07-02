@@ -1,30 +1,71 @@
 class Menu extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
   }
 
-  connectedCallback () {
+  connectedCallback() {
     this.render()
   }
 
-  render () {
+  render() {
     this.shadow.innerHTML =
       /* html */`
         <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .burger-button {
+                display: inline-block;
+                cursor: pointer;
+                padding: 10px;
+                border: none;
+                background: none;
+                outline: none;
+            }
+
+            .burger-button div {
+                width: 30px;
+                height: 3px;
+                background-color: #333;
+                margin: 5px 0;
+                transition: 0.4s;
+            }
+
+            .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 50px;
+                right: 10px;
+                background-color: white;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            .menu a {
+                padding: 15px;
+                text-decoration: none;
+                color: #333;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .menu a:last-child {
+                border-bottom: none;
+            }
+
+            .show {
+                display: flex;
+            }
         </style>
-        <div class="burger">
-          <button class="burger-button">
-            <div class="burger-icon">
-              <div class="burger-line"></div>
-              <div class="burger-line"></div>
-              <div class="burger-line"></div>
-            </div>
-          </button>
-          <div class="burger-menu">
-            <div class="burger-menu-header"></div>
-          </div>
-        </div>
+
+        <button class="burger-button">
+            <div></div>
+            <div></div>
+            <div></div>
+        </button>
       `
     let firstTime = true
     const burgerButton = this.shadow.querySelector('.burger-button')
