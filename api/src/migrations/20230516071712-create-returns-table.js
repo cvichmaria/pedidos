@@ -12,7 +12,12 @@ module.exports = {
       },
       saleId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        references: {
+          model: 'sales',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'NO ACTION'
       },
       customerId: {
         type: Sequelize.INTEGER,
@@ -50,6 +55,10 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE
       }
+    })
+
+    await queryInterface.addIndex('returns', ['saleId'], {
+      name: 'returns_saleId_fk'
     })
 
     await queryInterface.addIndex('returns', ['customerId'], {

@@ -70,6 +70,7 @@ module.exports = function (sequelize, DataTypes) {
   Sale.associate = function (models) {
     Sale.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
     Sale.hasMany(models.SaleDetail, { as: 'saleDetails', foreignKey: 'saleId' })
+    Sale.hasMany(models.Return, { as: 'return', foreignKey: 'saleId' })
     Sale.belongsToMany(models.Product, { through: models.SaleDetail, as: 'products', foreignKey: 'saleId' })
   }
 
