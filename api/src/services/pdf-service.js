@@ -2,47 +2,45 @@ const puppeteer = require('puppeteer')
 const ejs = require('ejs')
 const fs = require('fs')
 const path = require('path')
-const mongooseDb = require('../models/mongoose')
-const Language = mongooseDb.Language
 
 module.exports = class PdfService {
   async createPdf (userId, userType, type, data = []) {
     try {
-      const languages = await this.getLanguages()
       const filename = this.getFileName(userType, type, data)
-      const result = {}
 
-      for (const language of languages) {
-        const folder = path.join(__dirname, `../storage/pdfs/${userType}/${userId}/${type}/${language.alias}`)
-        fs.mkdirSync(folder, { recursive: true })
+      const folder = path.join(__dirname, `../storage/pdfs/${userType}/${userId}/${type}`)
+      fs.mkdirSync(folder, { recursive: true })
 
-        const browser = await puppeteer.launch()
-        const page = await browser.newPage()
-        const file = path.join(`${folder}/${filename}.pdf`)
+      const browser = await puppeteer.launch()
+      const page = await browser.newPage()
+      const file = path.join(`${folder}/${filename}.pdf`)
 
-        ejs.renderFile(path.join(__dirname, `../templates/pdfs/${userType}/${language.alias}/${type}.ejs`), { data }, async (err, htmlContent) => {
+      const htmlContent = await new Promise((resolve, reject) => {
+        ejs.renderFile(path.join(__dirname, `../templates/pdfs/${userType}/${type}.ejs`), { data }, (err, str) => {
           if (err) {
-            console.error('Hubo un error al renderizar el archivo EJS:', err)
-            return
+            reject(err);
+          } else {
+            resolve(str);
           }
+        });
+      });
 
-          await page.setContent(htmlContent)
+      await page.setContent(htmlContent, { waitUntil: 'networkidle0', timeout: 60000 });
 
-          await page.pdf({
-            path: file,
-            format: 'A4'
-          })
+      await page.pdf({
+        path: file,
+        format: 'A4'
+      });
 
-          await browser.close()
-        })
+      await browser.close();
 
-        result[language.alias] = {
-          filename: `${filename}.pdf`,
-          path: file
-        }
-      }
+      const result = {
+        filename: `${filename}.pdf`,
+        path: file
+      };
 
-      return result
+      return result;
+
     } catch (err) {
       console.error('Hubo un error al crear el PDF:', err)
     }

@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const sequelizeDb = require('../../models/sequelize')
-const UCredential = sequelizeDb.UCredential
+const CustomerCredential = sequelizeDb.CustomerCredential
+
 
 exports.signin = async (req, res) => {
   try {
@@ -13,7 +14,7 @@ exports.signin = async (req, res) => {
       return res.status(400).send({ message: 'La dirección de correo electrónico no es válida.' })
     }
 
-    const data = await UCredential.findOne({
+    const data = await CustomerCredential.findOne({
       where: {
         email: req.body.email,
         deletedAt: null
@@ -43,12 +44,6 @@ exports.signin = async (req, res) => {
       customerAccessToken: token,
       redirection: '/cliente'
     })
-
-    req.session.user = { id: data.id, admin: true }
-
-    res.status(200).send({
-      redirection: '/admin'
-    })
   } catch (err) {
     console.log(err)
     res.status(500).send({ message: err.message || 'Algún error ha surgido al recuperar los datos.' })
@@ -58,17 +53,17 @@ exports.signin = async (req, res) => {
 exports.checkSignin = (req, res) => {
   if (req.session.user) {
     res.status(200).send({
-      redirection: '/admin'
+      redirection: '/cliente'
     })
   } else {
     res.status(401).send({
-      redirection: '/admin/login'
+      redirection: '/cliente/login'
     })
   }
 }
 
 exports.reset = async (req, res) => {
-  UCredential.findOne({
+  CustomerCredential.findOne({
     where: {
       email: req.body.email,
       deletedAt: null

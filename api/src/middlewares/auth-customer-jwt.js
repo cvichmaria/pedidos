@@ -30,7 +30,6 @@ const verifyCustomerToken = (req, res, next) => {
       })
     }
 
-    req.customerStaffId = decoded.customerStaffId
     req.customerId = decoded.customerId
 
     next()
