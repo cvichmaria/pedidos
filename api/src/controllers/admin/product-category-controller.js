@@ -3,7 +3,12 @@ const ProductCategory = sequelizeDb.ProductCategory
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = (req, res) => {
-  ProductCategory.create(req.body).then(data => {
+  ProductCategory.create(req.body).then(async data => {
+
+    const GraphService = require('../../services/graph-service')
+    const graphService = new GraphService()
+    await graphService.createNode('Customer', { id: data.id, email: data.email })
+
     res.status(200).send(data)
   }).catch(err => {
     res.status(500).send({

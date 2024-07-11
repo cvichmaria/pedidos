@@ -1,5 +1,8 @@
 const sequelizeDb = require('../../models/sequelize')
 const Customer = sequelizeDb.Customer
+const GraphService = require('../../services/graph-service')
+const graphService = new GraphService()
+    await graphService.createNode('Customer', {id: data.id, email: data.email} )
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = (req, res) => {

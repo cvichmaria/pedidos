@@ -99,3 +99,6 @@ password
 user: neo4j
 bolt://localhost:7687
 pass: password
+
+
+crear pedido - salen en el carrito -  finalizar pedido realiza la compra - con los cambios en neo4j
