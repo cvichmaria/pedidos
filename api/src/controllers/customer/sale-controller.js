@@ -135,25 +135,35 @@ exports.create = async (req, res) => {
       return saleDetailData
     })
     
-    saleDetailsData.forEach(async saleDetail => {
-      await graphService.createRelation('Product', 'PART_OF', 'Sale', {
-        entityId : saleDetail.productId,
-        relatedEntityId: saleDetail.saleId,
-        properties: {
-          quantity: saleDetail.quantity
-        }
-      })
+    // saleDetailsData.forEach(async saleDetail => {
+    //   await graphService.createRelation('Product', 'PART_OF', 'Sale', {
+    //     entityId : saleDetail.productId,
+    //     relatedEntityId: saleDetail.saleId,
+    //     properties: {
+    //       quantity: saleDetail.quantity
+    //     }
+    //   })
 
-      await graphService.createRelation('Customer', 'PURCHASED', 'Product', {
-        entityId : req.customerId,
+    //   await graphService.createRelation('Customer', 'PURCHASED', 'Product', {
+    //     entityId : req.customerId,
+    //     relatedEntityId: saleDetail.productId,
+    //     properties: {
+    //       quantity: saleDetail.quantity
+    //     }
+    //   })
+    // });
+
+    await SaleDetail.bulkCreate(saleDetailsData)
+
+    for (const saleDetail of saleDetailsData) {
+      await graphService.createRelation('Sale', 'CONTAINS', 'Product', {
+        entityId: saleDetail.saleId,
         relatedEntityId: saleDetail.productId,
         properties: {
           quantity: saleDetail.quantity
         }
       })
-    });
-
-    await SaleDetail.bulkCreate(saleDetailsData)
+    }
 
     const customer = await Customer.findByPk(req.customerId)
 

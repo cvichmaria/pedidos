@@ -99,3 +99,29 @@ password
 user: neo4j
 bolt://localhost:7687
 pass: password
+
+
+
+BBDD neo4j explicacion
+
+() - nodo
+[] -  relacion
+
+MERGE (${entityCamelcase})-[r:${relation}]-(${entityCamelcase})
+
+RETURN - devuelve directamente el dato
+WITH - sirve para encadenar consultas
+
+MATCH (n) RETURN - devuelve todos los nodos de la bbdd
+la n es alias 
+
+MATCH (cositas:CommercialAgent) RETURN cositas - busca una etiqueta llamad commerciaalgen, le pone el as: cositas y lo devuelve
+
+MATCH (n) RETURN n
+lo que une customer con sale,es una relacion llamada purchase
+MATCH (c:Customer)-[:PURCHASE]->(s:Sale) RETURN c - deuvelve los clientes que tengan relacion con sale,
+
+si quiero devolver las ventas
+MATCH (c:Customer)-[:PURCHASE]->(s:Sale) RETURN c,s
+
+si quiero traer la info de la relacion
